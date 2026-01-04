@@ -58,24 +58,16 @@
         
         /* Image Placeholder Style */
         .img-box {
-            background: rgba(255,255,255,0.02); /* ปรับพื้นหลังให้อ่อนลงเพื่อให้รูปสินค้าเด่น */
+            background: rgba(255,255,255,0.05);
             width: 100%; height: 100%;
             display: flex; justify-content: center; align-items: center;
             color: var(--text-gold); font-family: 'Cinzel', serif;
-            border: 1px solid rgba(212, 175, 55, 0.5); /* เพิ่มความชัดของขอบทอง */
+            border: 1px solid rgba(212, 175, 55, 0.3);
             position: relative; overflow: hidden; transition: 0.5s;
         }
-        .img-box:hover { border-color: #FCF6BA; box-shadow: 0 0 20px rgba(212, 175, 55, 0.2); }
+        .img-box:hover { border-color: #FCF6BA; }
         .img-arch { border-radius: var(--border-radius-arch); }
-        
-        /* ปรับรูปภาพให้เต็มกรอบ */
-        .img-fill { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            opacity: 0.9; 
-            transition: 0.5s; 
-        }
+        .img-fill { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; transition: 0.5s; }
         .img-box:hover .img-fill { opacity: 1; transform: scale(1.05); }
 
         /* --- Navigation --- */
@@ -132,22 +124,14 @@
         .story-row { display: flex; align-items: center; gap: 80px; margin-bottom: 100px; }
         .story-row.reverse { flex-direction: row-reverse; }
         .story-text { flex: 1; }
-        
-        /* ปรับขนาดรูปในส่วน Story ให้สมดุล */
         .story-img-wrapper { flex: 1; height: 500px; position: relative; }
-        
         .line-gold { width: 60px; height: 2px; background: var(--gold-gradient); margin: 20px 0; }
 
         /* --- Product Gallery --- */
         .product-showcase { background: #150821; position: relative; }
-        .gallery-grid { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr 1fr; 
-            gap: 30px; 
-            align-items: center;
-        }
-        .g-item-1 { height: 500px; width: 100%; }
-        .g-text-1 { padding: 0 20px; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
+        .g-item-1 { grid-column: 2 / 7; height: 500px; }
+        .g-text-1 { grid-column: 8 / 12; align-self: center; }
         .g-item-2 { grid-column: 6 / 12; height: 400px; margin-top: 50px; }
         .g-text-2 { grid-column: 2 / 5; align-self: center; text-align: right; }
         .g-item-3 { grid-column: 3 / 9; height: 350px; margin-top: 50px; }
@@ -285,6 +269,7 @@
     </nav>
     <main>
     <header class="hero pd" style="position: relative; overflow: hidden;">
+        <!-- Background Product Image -->
         <img src="p-1.png" 
              alt="CHANA Product Background" 
              style="
@@ -297,11 +282,13 @@
                 opacity: 0.3;
                 filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.6)) drop-shadow(0 10px 20px rgba(212, 175, 55, 0.3));
                 z-index: 1;
+                aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
              "
              data-aos="fade-up" data-aos-delay="600" data-aos-duration="1200"
         />
         
         <div class="hero-content" data-aos="fade-up" data-aos-duration="1500" style="position: relative; z-index: 2;">
+            <!-- Logo CHANA -->
             <div style="margin-bottom: 30px;" data-aos="zoom-in" data-aos-delay="200">
                 <img src="chana-pnmg.png" 
                      alt="CHANA Logo" 
@@ -310,7 +297,7 @@
                         height: auto;
                         filter: brightness(0) saturate(100%) invert(72%) sepia(53%) saturate(386%) hue-rotate(8deg) brightness(95%) contrast(87%);
                         transition: all 0.3s ease;
-                      "
+                     "
                 />
             </div>
             
@@ -338,9 +325,8 @@
                 <p>การใช้ธูปในการสักการะกำลังหายไป... ไม่ใช่เพราะเราหมดศรัทธา แต่เพราะ "ไม่สะดวก ไม่ปลอดภัย และไม่มีพื้นที่" ในป่าคอนกรีต</p>
             </div>
             <div class="story-img-wrapper">
-                <div class="img-box img-arch">
-                    <img src="S__13639742.jpg" alt="CHANA Modern Worship Artifact" class="img-fill">
-                                    </div>
+                <div class="img-box img-arch" data-label="Image 1 (Representative)">
+                </div>
             </div>
         </div>
 
@@ -351,31 +337,26 @@
                 <p>เรานำ ธูป เทียน ดอกไม้ มารวมเป็นหนึ่ง ไม่ได้เปลี่ยนความเชื่อ แต่ปรับ "รูปแบบ" ให้ดำรงอยู่ได้อย่างงดงามในวิถีชีวิตปัจจุบัน</p>
             </div>
             <div class="story-img-wrapper">
-                <div class="img-box img-arch">
-                     <img src="test.jpg" alt="Redesigning Faith" class="img-fill">
-                                     </div>
+                <div class="img-box img-arch" data-label="Design Philosophy Image">
+
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="product" class="section-padding product-showcase">
+       <section id="product" class="section-padding product-showcase">
         <div class="container">
             <h2 class="text-gold-gradient" style="text-align: center; margin-bottom: 80px; font-size: 3rem;" data-aos="zoom-in">The Artifacts</h2>
             
             <div class="gallery-grid">
                 <div class="g-item-1" data-aos="fade-right">
-                    <img src="S__13639717.jpg" alt="">
+                    <div class="img-box img-arch">
+                        <img src="S__13639718.jpg" alt="Thai Collection" class="img-fill">
+                                            </div>
                 </div>
-                
-                <div class="g-text-1" data-aos="fade-up" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
-                    <span class="text-gold-gradient" style="font-weight: bold; font-size: 1.8rem; display: block; margin-bottom: 20px;">Thai Collection</span>
-                    <p style="font-size: 1.1rem;">รองรับธูปดอกบัว 3 กลีบ และ 9 กลีบ<br>สง่างามตามแบบฉบับดั้งเดิม</p>
-                </div>
-
-                
-                
-                <div class="g-item-1" data-aos="fade-right">
-                    <div class="img-box img-arch" data-label="ภาพ 2 & 3: Thai Candle"></div>
+                <div class="g-text-1" data-aos="fade-left">
+                    <span class="text-gold-gradient" style="font-weight: bold;">Thai Collection</span>
+                    <p>รองรับธูปดอกบัว 3 กลีบ และ 9 กลีบ สง่างามตามแบบฉบับดั้งเดิม</p>
                 </div>
 
                 <div class="g-text-2" data-aos="fade-right">
@@ -403,16 +384,12 @@
 
     <section class="split-section">
         <div class="split-col">
-
-                <img src="S__13639724.jpg" alt="Wooden Base" class="img-fill">
-
+            <div class="img-box" style="height: 300px; margin-bottom: 30px;" data-label="ภาพ 6: Wooden Base"></div>
             <h3 class="text-gold-gradient">Wooden Base</h3>
             <p>ฐานไม้ 3 แบบ สำหรับบ้าน คอนโด ติดผนังหรือตั้งโต๊ะ</p>
         </div>
         <div class="split-col" style="background: #12061b;">
-            <div class="img-box" style="height: 300px; margin-bottom: 30px;">
-                 <img src="S__13639720.jpg" alt="Portable Incense" class="img-fill">
-                             </div>
+            <div class="img-box" style="height: 300px; margin-bottom: 30px;" data-label="ภาพ 7: Portable"></div>
             <h3 class="text-gold-gradient">Portable Incense</h3>
             <p>พกพาความศรัทธาไปได้ทุกที่ แม้ในพื้นที่ที่ไม่สามารถจุดไฟ</p>
         </div>
@@ -487,21 +464,21 @@
                     <div class="step-circle">I</div>
                     <div class="img-box" style="height: 200px; margin-bottom: 15px;" data-label="ภาพ 8">
                         <img src="S__13639732.jpg" alt="วางเทียนแนวนอน" style="width: 100%; height: 100%; object-fit: cover;">
-                                            </div>
+                    </div>
                     <p>วางเทียนแนวนอน</p>
                 </div>
                 <div class="step-item" data-aos="fade-up" data-aos-delay="200">
                     <div class="step-circle">II</div>
                     <div class="img-box" style="height: 200px; margin-bottom: 15px;" data-label="ภาพ 9">
                         <img src="S__13639734.jpg" alt="หยดกลิ่นลงบนธูป" style="width: 100%; height: 100%; object-fit: cover;">
-                                            </div>
+                    </div>
                     <p>หยดกลิ่นลงบนธูป</p>
                 </div>
                 <div class="step-item" data-aos="fade-up" data-aos-delay="400">
                     <div class="step-circle">III</div>
                     <div class="img-box" style="height: 200px; margin-bottom: 15px;" data-label="ภาพ 10">
                         <img src="S__13639736.jpg" alt="ตั้งเทียนขึ้นและสักการะ" style="width: 100%; height: 100%; object-fit: cover;">
-                                            </div>
+                    </div>
                     <p>ตั้งเทียนขึ้นและสักการะ</p>
                 </div>
             </div>
