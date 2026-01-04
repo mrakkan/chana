@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHANA - Sacred Modern Worship</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&family=Sarabun:wght@200;300;400&display=swap" rel="stylesheet">
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #0f0518; /* ม่วงเกือบดำ */
+            --bg-panel: #1a0b2e;
+            --gold-gradient: linear-gradient(135deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+            --text-gold: #D4AF37;
+            --text-grey: #a8a0b0;
+            --border-radius-arch: 200px 200px 0 0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { overflow-x: hidden; width: 100%; scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: var(--bg-dark);
+            color: #fff;
+            overflow-x: hidden;
+            font-weight: 300;
+            width: 100%;
+            position: relative;
+        }
+
+        /* --- Typography --- */
+        h1, h2, h3, h4, .sacred-font {
+            font-family: 'Cinzel', serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .text-gold-gradient {
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+        }
+
+        p { line-height: 1.8; color: var(--text-grey); font-size: 1.05rem; }
+
+        /* --- Layout Utils --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .section-padding { padding: 120px 0; }
+        
+        /* Image Placeholder Style */
+        .img-box {
+            background: rgba(255,255,255,0.05);
+            width: 100%; height: 100%;
+            display: flex; justify-content: center; align-items: center;
+            color: var(--text-gold); font-family: 'Cinzel', serif;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            position: relative; overflow: hidden; transition: 0.5s;
+        }
+        .img-box:hover { border-color: #FCF6BA; }
+        .img-arch { border-radius: var(--border-radius-arch); }
+        .img-fill { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; transition: 0.5s; }
+        .img-box:hover .img-fill { opacity: 1; transform: scale(1.05); }
+
+        /* --- Navigation --- */
+        nav {
+            position: fixed; width: 100%; padding: 30px 50px;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000; transition: all 0.3s ease;
+        }
+        nav.scrolled {
+            background: rgba(15, 5, 24, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+            padding: 20px 50px;
+        }
+        .logo { font-size: 2rem; font-weight: 800; color: #fff; letter-spacing: 5px; font-family: 'Cinzel', serif; z-index: 1002; }
+        
+        .nav-items { display: flex; gap: 40px; }
+        .nav-items a { color: #fff; text-decoration: none; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; position: relative; transition: 0.3s; }
+        .nav-items a::after { content:''; position: absolute; width: 0; height: 1px; bottom: -5px; left: 0; background: var(--text-gold); transition: 0.3s; }
+        .nav-items a:hover { color: var(--text-gold); }
+        .nav-items a:hover::after { width: 100%; }
+
+        /* Hamburger */
+        .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 6px; z-index: 1002; }
+        .hamburger span { display: block; width: 30px; height: 3px; background-color: #fff; transition: 0.3s; border-radius: 2px; }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(8px, 8px); background: var(--text-gold); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(8px, -8px); background: var(--text-gold); }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh; min-height: 600px;
+            display: flex; align-items: center; justify-content: center;
+            position: relative; text-align: center;
+            background: radial-gradient(circle at center, #2E0B38 0%, #0f0518 80%);
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/stardust.png'); opacity: 0.3;
+        }
+        .hero-content { z-index: 2; max-width: 900px; padding: 20px; }
+        .hero h1 { 
+            font-size: clamp(2.5rem, 5vw, 5rem); margin-bottom: 20px;
+            background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero-quote { font-style: italic; font-size: clamp(1rem, 1.2rem, 1.5rem); margin-bottom: 40px; color: #fff; }
+        .scroll-indicator {
+            position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+            animation: bounce 2s infinite; opacity: 0.7;
+        }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);} 40% {transform: translateY(-10px) translateX(-50%);} 60% {transform: translateY(-5px) translateX(-50%);} }
+
+        /* --- About (Zig Zag) --- */
+        .story-row { display: flex; align-items: center; gap: 80px; margin-bottom: 100px; }
+        .story-row.reverse { flex-direction: row-reverse; }
+        .story-text { flex: 1; }
+        .story-img-wrapper { flex: 1; height: 500px; position: relative; }
+        .line-gold { width: 60px; height: 2px; background: var(--gold-gradient); margin: 20px 0; }
+
+        /* --- Product Gallery --- */
+        .product-showcase { background: #150821; position: relative; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
+        .g-item-1 { grid-column: 2 / 7; height: 500px; }
+        .g-text-1 { grid-column: 8 / 12; align-self: center; }
+        .g-item-2 { grid-column: 6 / 12; height: 400px; margin-top: 50px; }
+        .g-text-2 { grid-column: 2 / 5; align-self: center; text-align: right; }
+        .g-item-3 { grid-column: 3 / 9; height: 350px; margin-top: 50px; }
+        .g-text-3 { grid-column: 5 / 9; text-align: center; margin-top: 20px; }
+        .product-label { font-size: 1.5rem; color: var(--text-gold); margin-bottom: 10px; display: block; }
+
+        /* --- Split Section --- */
+        .split-section { display: grid; grid-template-columns: 1fr 1fr; min-height: 80vh; }
+        .split-col { padding: 60px; display: flex; flex-direction: column; justify-content: center; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
+        .split-col:hover { background: rgba(255,255,255,0.02); }
+
+        /* --- Scents --- */
+        .scents-wrapper { overflow-x: auto; white-space: nowrap; padding-bottom: 50px; -webkit-overflow-scrolling: touch; }
+        .scent-card {
+            display: inline-block; width: 300px; margin-right: 30px;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(212,175,55,0.1);
+            padding: 40px 20px; text-align: center; border-radius: 10px;
+            white-space: normal; vertical-align: top; transition: 0.3s;
+        }
+        .scent-card:hover { transform: translateY(-10px); border-color: var(--text-gold); background: #1f0d2b; }
+
+        /* --- NEW Health & Safety Highlight Design --- */
+        .health-highlight {
+            margin-top: 80px;
+            padding: 60px 40px;
+            background: linear-gradient(145deg, rgba(30, 10, 45, 0.6), rgba(10, 5, 15, 0.8));
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
+        }
+        .health-highlight::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 60%);
+            animation: pulse-glow 6s infinite alternate; pointer-events: none;
+        }
+        @keyframes pulse-glow { 0% { transform: scale(1); opacity: 0.5; } 100% { transform: scale(1.1); opacity: 0.8; } }
+
+        .health-grid-layout {
+            display: grid; grid-template-columns: 1fr 1px 1fr; gap: 40px;
+            align-items: flex-start; position: relative; z-index: 2;
+        }
+        .health-divider {
+            width: 1px; height: 100%; min-height: 200px;
+            background: linear-gradient(to bottom, transparent, var(--text-gold), transparent);
+            opacity: 0.5;
+        }
+        .health-item { text-align: center; }
+        .health-icon-wrapper {
+            width: 80px; height: 80px; margin: 0 auto 25px;
+            border: 1px solid var(--text-gold); border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 2rem; color: var(--text-gold);
+            background: rgba(0,0,0,0.3); box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+            transition: 0.3s;
+        }
+        .health-item:hover .health-icon-wrapper {
+            background: var(--text-gold); color: #000;
+            transform: scale(1.1); box-shadow: 0 0 30px rgba(212, 175, 55, 0.6);
+        }
+        .health-list { list-style: none; padding: 0; text-align: center; }
+        .health-list li { margin-bottom: 20px; font-size: 1.1rem; color: var(--text-grey); }
+        .health-list li span.highlight { color: var(--text-gold); font-weight: 500; display: block; margin-bottom: 5px; font-family: 'Cinzel', serif; letter-spacing: 1px; }
+
+        /* --- Steps --- */
+        .steps-container { display: flex; justify-content: space-around; text-align: center; position: relative; flex-wrap: wrap; }
+        .steps-container::before {
+            content: ''; position: absolute; top: 30%; left: 10%; right: 10%; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--text-gold), transparent); z-index: 0; opacity: 0.3;
+        }
+        .step-item { z-index: 1; width: 25%; min-width: 200px; }
+        .step-circle {
+            width: 60px; height: 60px; border-radius: 50%; border: 1px solid var(--text-gold);
+            display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;
+            background: var(--bg-dark); font-family: 'Cinzel'; font-size: 1.5rem;
+        }
+
+        /* --- Footer --- */
+        footer { background: #000; padding: 80px 0; text-align: center; }
+        .footer-logo { font-size: clamp(2rem, 3rem, 4rem); font-family: 'Cinzel'; background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* --- Mobile Responsive --- */
+        @media (max-width: 1024px) {
+            .gallery-grid { display: flex; flex-direction: column; gap: 40px; }
+            .g-item-1, .g-item-2, .g-item-3 { height: 400px; margin-top: 0; }
+            .g-text-1, .g-text-2, .g-text-3 { text-align: center !important; margin-top: 20px; }
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 20px; background: rgba(15, 5, 24, 0.95); }
+            .hamburger { display: flex; }
+            .nav-items {
+                position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
+                background: rgba(15, 5, 24, 0.98); backdrop-filter: blur(20px);
+                flex-direction: column; justify-content: center; align-items: center;
+                transition: 0.4s; z-index: 1001; padding: 20px;
+            }
+            .nav-items.active { right: 0; }
+            .nav-items a { font-size: 1.8rem; letter-spacing: 4px; }
+            
+            .story-row, .story-row.reverse { flex-direction: column; gap: 30px; margin-bottom: 60px; }
+            .story-img-wrapper { width: 100%; height: 300px; }
+            
+            .split-section { grid-template-columns: 1fr; }
+            
+            /* Mobile Health */
+            .health-highlight { padding: 40px 20px; }
+            .health-grid-layout { grid-template-columns: 1fr; gap: 40px; }
+            .health-divider { width: 100%; height: 1px; min-height: 1px; background: linear-gradient(to right, transparent, var(--text-gold), transparent); }
+            
+            .steps-container::before { display: none; }
+            .step-item { width: 100%; margin-bottom: 40px; }
+        }
+        .pd{
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo text-gold-gradient">CHANA</div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="nav-items">
+            <a href="#about" onclick="closeMenu()">About</a>
+            <a href="#product" onclick="closeMenu()">Collection</a>
+            <a href="#scent" onclick="closeMenu()">Scents</a>
+            <a href="#contact" onclick="closeMenu()">Contact</a>
+        </div>
+    </nav>
+    <main>
+    <header class="hero pd" style="position: relative; overflow: hidden;">
+        <!-- Background Product Image -->
+        <img src="p-1.png" 
+             alt="CHANA Product Background" 
+             style="
+                position: absolute;
+                bottom: -100px;
+                right: 50%;
+                transform: translateX(50%);
+                width: clamp(300px, 50vw, 700px);
+                height: auto;
+                opacity: 0.3;
+                filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.6)) drop-shadow(0 10px 20px rgba(212, 175, 55, 0.3));
+                z-index: 1;
+                aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+             "
+             data-aos="fade-up" data-aos-delay="600" data-aos-duration="1200"
+        />
+        
+        <div class="hero-content" data-aos="fade-up" data-aos-duration="1500" style="position: relative; z-index: 2;">
+            <!-- Logo CHANA -->
+            <div style="margin-bottom: 30px;" data-aos="zoom-in" data-aos-delay="200">
+                <img src="chana-pnmg.png" 
+                     alt="CHANA Logo" 
+                     style="
+                        width: clamp(150px, 25vw, 300px);
+                        height: auto;
+                        filter: brightness(0) saturate(100%) invert(72%) sepia(53%) saturate(386%) hue-rotate(8deg) brightness(95%) contrast(87%);
+                        transition: all 0.3s ease;
+                     "
+                />
+            </div>
+            
+            <h1>A New Way to Worship</h1>
+            <p class="hero-quote">
+                "Worship is not about smoke and fire,<br>but intention, presence, and respect."
+            </p>
+            <div style="width: 1px; height: 60px; background: var(--gold-gradient); margin: 20px auto;"></div>
+            <p>
+                CHANA คือการออกแบบประสบการณ์การสักการะรูปแบบใหม่<br>
+                ปลอดควัน ปลอดภัย แต่ยังคงไว้ซึ่งแก่นของศรัทธา
+            </p>
+            
+        </div>
+        <div class="scroll-indicator" style="position: relative; z-index: 2;">
+            <span style="font-size: 2rem; color: var(--text-gold);">⇩</span>
+        </div>
+    </header>
+
+    <section id="about" class="section-padding container pd">
+        <div class="story-row" data-aos="fade-up">
+            <div class="story-text">
+                <h2 class="text-gold-gradient">Why CHANA Exists</h2>
+                <div class="line-gold"></div>
+                <p>การใช้ธูปในการสักการะกำลังหายไป... ไม่ใช่เพราะเราหมดศรัทธา แต่เพราะ "ไม่สะดวก ไม่ปลอดภัย และไม่มีพื้นที่" ในป่าคอนกรีต</p>
+            </div>
+            <div class="story-img-wrapper">
+                <div class="img-box img-arch" data-label="Image 1 (Representative)">
+                </div>
+            </div>
+        </div>
+
+        <div class="story-row reverse" data-aos="fade-up">
+            <div class="story-text">
+                <h2 class="text-gold-gradient">Redesigning Faith</h2>
+                <div class="line-gold"></div>
+                <p>เรานำ ธูป เทียน ดอกไม้ มารวมเป็นหนึ่ง ไม่ได้เปลี่ยนความเชื่อ แต่ปรับ "รูปแบบ" ให้ดำรงอยู่ได้อย่างงดงามในวิถีชีวิตปัจจุบัน</p>
+            </div>
+            <div class="story-img-wrapper">
+                <div class="img-box img-arch" data-label="Design Philosophy Image">
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="product" class="section-padding product-showcase">
+        <div class="container">
+            <h2 class="text-gold-gradient" style="text-align: center; margin-bottom: 80px; font-size: 3rem;" data-aos="zoom-in">The Artifacts</h2>
+            
+            <div class="gallery-grid">
+                <div class="g-item-1" data-aos="fade-right">
+                    <div class="img-box img-arch" data-label="ภาพ 2 & 3: Thai Candle"></div>
+                </div>
+                <div class="g-text-1" data-aos="fade-left">
+                    <span class="text-gold-gradient" style="font-weight: bold;">Thai Collection</span>
+                    <p>รองรับธูปดอกบัว 3 กลีบ และ 9 กลีบ สง่างามตามแบบฉบับดั้งเดิม</p>
+                </div>
+
+                <div class="g-text-2" data-aos="fade-right">
+                    <span class="text-gold-gradient" style="font-weight: bold;">Chinese Collection</span>
+                    <p>ดีไซน์สำหรับธูปดอกบัว 3 กลีบ ผสานความเชื่อจีนร่วมสมัย</p>
+                </div>
+                <div class="g-item-2" data-aos="fade-left">
+                    <div class="img-box" style="border-radius: 20px;" data-label="ภาพ 4: Chinese Candle"></div>
+                </div>
+
+                <div class="g-item-3" data-aos="fade-up">
+                    <div class="img-box img-arch" data-label="ภาพ 5: Hindu Candle"></div>
+                </div>
+                <div class="g-text-3" data-aos="fade-up">
+                    <span class="text-gold-gradient" style="font-weight: bold;">Hindu Collection</span>
+                    <p>รองรับธูปดอกบัว 9 กลีบ บูชาเทพฮินดูด้วยความวิจิตร</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="split-section">
+        <div class="split-col">
+            <div class="img-box" style="height: 300px; margin-bottom: 30px;" data-label="ภาพ 6: Wooden Base"></div>
+            <h3 class="text-gold-gradient">Wooden Base</h3>
+            <p>ฐานไม้ 3 แบบ สำหรับบ้าน คอนโด ติดผนังหรือตั้งโต๊ะ</p>
+        </div>
+        <div class="split-col" style="background: #12061b;">
+            <div class="img-box" style="height: 300px; margin-bottom: 30px;" data-label="ภาพ 7: Portable"></div>
+            <h3 class="text-gold-gradient">Portable Incense</h3>
+            <p>พกพาความศรัทธาไปได้ทุกที่ แม้ในพื้นที่ที่ไม่สามารถจุดไฟ</p>
+        </div>
+    </section>
+
+    <section id="scent" class="section-padding container pd">
+        <h2 class="text-gold-gradient" style="margin-bottom: 50px;">Scent Philosophy</h2>
+        
+        <div class="scents-wrapper">
+            <div class="scent-card" data-aos="fade-left">
+                <h4 style="color: var(--text-gold);">Sacred Smoke</h4>
+                <p style="font-size: 0.9rem;">Signature Scent: กลิ่นควันธูปอ่อนๆ</p>
+            </div>
+            <div class="scent-card" data-aos="fade-left" data-aos-delay="100">
+                <h4 style="color: var(--text-gold);">Jasmine Veil</h4>
+                <p style="font-size: 0.9rem;">Gentleness: กลิ่นมะลิ เมตตาและบริสุทธิ์</p>
+            </div>
+            <div class="scent-card" data-aos="fade-left" data-aos-delay="200">
+                <h4 style="color: var(--text-gold);">Sandal Focus</h4>
+                <p style="font-size: 0.9rem;">Inner Focus: ไม้จันทน์ เพื่อสมาธิ</p>
+            </div>
+            <div class="scent-card" data-aos="fade-left" data-aos-delay="300">
+                <h4 style="color: var(--text-gold);">Hinoki Pure</h4>
+                <p style="font-size: 0.9rem;">Renewal: ไม้ฮิโนกิ สะอาดแบบเซน</p>
+            </div>
+             <div class="scent-card" data-aos="fade-left" data-aos-delay="400">
+                <h4 style="color: var(--text-gold);">Cedar Stillness</h4>
+                <p style="font-size: 0.9rem;">Grounded: ไม้ซีดาร์ มั่นคง ลึกซึ้ง</p>
+            </div>
+        </div>
+
+        <div class="health-highlight" data-aos="zoom-in-up" data-aos-duration="1200">
+            <h3 style="text-align: center; margin-bottom: 50px; color: var(--text-gold); letter-spacing: 3px;">
+                Health & Safety
+            </h3>
+            
+            <div class="health-grid-layout">
+                <div class="health-item">
+                    <div class="health-icon-wrapper">
+                        <span>✦</span> 
+                    </div>
+                    <h4 style="margin-bottom: 20px; color: #fff;">Health</h4>
+                    <ul class="health-list">
+                        <li><span class="highlight">Zero Smoke</span>ไม่มีควันและสารก่อมะเร็ง</li>
+                        <li><span class="highlight">Allergy Free</span>ลดความเสี่ยงภูมิแพ้</li>
+                        <li><span class="highlight">Pure Ingredients</span>ใช้น้ำมันหอมระเหยปลอดภัย</li>
+                    </ul>
+                </div>
+
+                <div class="health-divider"></div>
+
+                <div class="health-item">
+                    <div class="health-icon-wrapper">
+                        <span>🛡</span>
+                    </div>
+                    <h4 style="margin-bottom: 20px; color: #fff;">Safety</h4>
+                    <ul class="health-list">
+                        <li><span class="highlight">Flameless</span>ไม่ต้องใช้ไฟจริง หมดห่วงเรื่องไฟไหม้</li>
+                        <li><span class="highlight">Kid & Pet Friendly</span>ปลอดภัยต่อเด็กและสัตว์เลี้ยง</li>
+                        <li><span class="highlight">Condo Living</span>เหมาะสำหรับพื้นที่ปิดและอาคารสูง</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding" style="background: #11051a;">
+        <div class="container">
+            <h2 class="text-gold-gradient" style="text-align: center; margin-bottom: 60px;">Ritual Steps</h2>
+            <div class="steps-container">
+                <div class="step-item" data-aos="fade-up">
+                    <div class="step-circle">I</div>
+                    <div class="img-box" style="height: 200px; margin-bottom: 15px;" data-label="ภาพ 8"><img src="S__13639732.jpg" alt=""></div>
+                    <p>วางเทียนแนวนอน</p>
+                </div>
+                <div class="step-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="step-circle">II</div>
+                    <div class="img-box" style="height: 200px; margin-bottom: 15px;" data-label="ภาพ 9"><img src="S__13639734.jpg" alt=""></div>
+                    <p>หยดกลิ่นลงบนธูป</p>
+                </div>
+                <div class="step-item" data-aos="fade-up" data-aos-delay="400">
+                    <div class="step-circle">III</div>
+                    <div class="img-box" style="height: 200px; margin-bottom: 15px;" data-label="ภาพ 10"><img src="S__13639736.jpg" alt=""></div>
+                    <p>ตั้งเทียนขึ้นและสักการะ</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="sustainability" style="padding: 100px 20px; text-align: center; background: linear-gradient(0deg, #0f0518, #2a1138); position: relative; overflow: hidden;">
+        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url('https://www.transparenttextures.com/patterns/stardust.png'); opacity: 0.1;"></div>
+        
+        <div style="position: relative; z-index: 2; max-width: 1200px; margin: 0 auto;">
+            <h2 class="text-gold-gradient" style="font-size: clamp(2rem, 2.5rem, 3rem); margin-bottom: 30px;" data-aos="fade-up">Sustainability & Soul</h2>
+            <p style="max-width: 700px; margin: 0 auto; margin-bottom: 50px; font-size: clamp(1rem, 1.1rem, 1.2rem); line-height: 1.8; padding: 0 20px;" data-aos="fade-up" data-aos-delay="100">
+                ผลิตจากขี้เลื่อยไม้สัก ใช้วัสดุเหลือใช้ให้เกิดค่า<br>
+                ใช้ซ้ำได้ ปราศจากเถ้าถ่าน เคารพทั้งธรรมชาติและจิตวิญญาณ
+            </p>
+            
+            <div class="sustainability-icons" style="
+                display: grid; 
+                grid-template-columns: repeat(3, 1fr); 
+                gap: 40px; 
+                max-width: 900px; 
+                margin: 0 auto;
+                padding: 0 20px;
+            ">
+                <div data-aos="zoom-in" data-aos-delay="200" style="
+                    padding: 30px 20px;
+                    background: rgba(255,255,255,0.03);
+                    border: 1px solid rgba(212,175,55,0.2);
+                    border-radius: 15px;
+                    transition: all 0.3s ease;
+                ">
+                    <div style="font-size: 3rem; margin-bottom: 15px; color: var(--text-gold);">♻</div>
+                    <h4 style="color: var(--text-gold); margin-bottom: 10px; font-size: clamp(1.1rem, 1.3rem, 1.5rem); font-family: 'Cinzel', serif;">Natural</h4>
+                    <p style="font-size: 0.95rem; color: var(--text-grey);">ผลิตจากไม้สัก<br>วัสดุธรรมชาติ</p>
+                </div>
+                
+                <div data-aos="zoom-in" data-aos-delay="300" style="
+                    padding: 30px 20px;
+                    background: rgba(255,255,255,0.03);
+                    border: 1px solid rgba(212,175,55,0.2);
+                    border-radius: 15px;
+                    transition: all 0.3s ease;
+                ">
+                    <div style="font-size: 3rem; margin-bottom: 15px; color: var(--text-gold);">∞</div>
+                    <h4 style="color: var(--text-gold); margin-bottom: 10px; font-size: clamp(1.1rem, 1.3rem, 1.5rem); font-family: 'Cinzel', serif;">Reusable</h4>
+                    <p style="font-size: 0.95rem; color: var(--text-grey);">ใช้ซ้ำได้<br>หลายครั้ง</p>
+                </div>
+                
+                <div data-aos="zoom-in" data-aos-delay="400" style="
+                    padding: 30px 20px;
+                    background: rgba(255,255,255,0.03);
+                    border: 1px solid rgba(212,175,55,0.2);
+                    border-radius: 15px;
+                    transition: all 0.3s ease;
+                ">
+                    <div style="font-size: 3rem; margin-bottom: 15px; color: var(--text-gold);">∅</div>
+                    <h4 style="color: var(--text-gold); margin-bottom: 10px; font-size: clamp(1.1rem, 1.3rem, 1.5rem); font-family: 'Cinzel', serif;">Zero Waste</h4>
+                    <p style="font-size: 0.95rem; color: var(--text-grey);">ไม่มีเถ้า<br>ไม่มีขยะ</p>
+                </div>
+            </div>
+        </div>
+        
+        <style>
+            .sustainability-icons > div:hover {
+                transform: translateY(-10px);
+                border-color: var(--text-gold);
+                background: rgba(255,255,255,0.08);
+                box-shadow: 0 10px 30px rgba(212,175,55,0.3);
+            }
+            
+            .sustainability-icons > div:hover > div:first-child {
+                transform: scale(1.2);
+                transition: transform 0.3s ease;
+            }
+            
+            /* Responsive for Sustainability Section */
+            @media (max-width: 768px) {
+                #sustainability {
+                    padding: 80px 15px !important;
+                }
+                
+                .sustainability-icons {
+                    grid-template-columns: 1fr !important;
+                    gap: 20px !important;
+                    max-width: 400px !important;
+                }
+                
+                .sustainability-icons > div {
+                    padding: 25px 20px !important;
+                }
+            }
+            
+            @media (max-width: 480px) {
+                #sustainability {
+                    padding: 60px 15px !important;
+                }
+                
+                .sustainability-icons > div > div:first-child {
+                    font-size: 2.5rem !important;
+                }
+            }
+        </style>
+    </section>
+
+    <footer id="contact">
+        <div class="container" data-aos="fade-up">
+            <div class="footer-logo">CHANA</div>
+            <p style="margin: 20px 0;">"A new way to worship"</p>
+            <div style="width: 50px; height: 1px; background: #333; margin: 30px auto;"></div>
+            <p>yok240104@gmail.com <br> 0642293919</p>
+            <p style="margin-top: 50px; font-size: 0.8rem; opacity: 0.5;">© 2025 CHANA. All Rights Reserved.</p>
+        </div>
+    </footer>
+    </main>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ offset: 120, duration: 1000, easing: 'ease-out-cubic', once: true });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+        });
+
+        // Menu Toggle
+        function toggleMenu() {
+            document.querySelector('.nav-items').classList.toggle('active');
+            document.querySelector('.hamburger').classList.toggle('active');
+            document.body.style.overflow = document.querySelector('.nav-items').classList.contains('active') ? 'hidden' : 'auto';
+        }
+
+        function closeMenu() {
+            document.querySelector('.nav-items').classList.remove('active');
+            document.querySelector('.hamburger').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    closeMenu();
+                    setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
